@@ -6,12 +6,13 @@ SKIPUNZIP=1
 
 # prepare v2ray execute environment
 ui_print "- Prepare V2Ray execute environment."
+modpath="/sbin/.magisk/img/v2ray"
 mkdir -p /data/v2ray
 mkdir -p /data/v2ray/dnscrypt-proxy
 mkdir -p /data/v2ray/run
-mkdir -p $MODPATH/scripts
-mkdir -p $MODPATH/system/bin
-mkdir -p $MODPATH/system/etc
+mkdir -p ${modpath}/scripts
+mkdir -p ${modpath}/system/bin
+mkdir -p ${modpath}/system/etc
 # download latest v2ray core from official link
 ui_print "- Connect official V2Ray download link."
 official_v2ray_link="https://github.com/v2fly/v2ray-core/releases"
@@ -45,12 +46,12 @@ fi
 ui_print "- Install V2Ray core $ARCH execute files"
 unzip -j -o "${download_v2ray_zip}" "geoip.dat" -d /data/v2ray >&2
 unzip -j -o "${download_v2ray_zip}" "geosite.dat" -d /data/v2ray >&2
-unzip -j -o "${download_v2ray_zip}" "v2ray" -d $MODPATH/system/bin >&2
-unzip -j -o "${download_v2ray_zip}" "v2ctl" -d $MODPATH/system/bin >&2
-unzip -j -o "${ZIPFILE}" 'v2ray/scripts/*' -d $MODPATH/scripts >&2
-unzip -j -o "${ZIPFILE}" "v2ray/bin/$ARCH/dnscrypt-proxy" -d $MODPATH/system/bin >&2
-unzip -j -o "${ZIPFILE}" 'service.sh' -d $MODPATH >&2
-unzip -j -o "${ZIPFILE}" 'uninstall.sh' -d $MODPATH >&2
+unzip -j -o "${download_v2ray_zip}" "v2ray" -d ${modpath}/system/bin >&2
+unzip -j -o "${download_v2ray_zip}" "v2ctl" -d ${modpath}/system/bin >&2
+unzip -j -o "${ZIPFILE}" 'v2ray/scripts/*' -d ${modpath}/scripts >&2
+unzip -j -o "${ZIPFILE}" "v2ray/bin/$ARCH/dnscrypt-proxy" -d ${modpath}/system/bin >&2
+unzip -j -o "${ZIPFILE}" 'service.sh' -d ${modpath} >&2
+unzip -j -o "${ZIPFILE}" 'uninstall.sh' -d ${modpath} >&2
 rm "${download_v2ray_zip}"
 # copy v2ray data and config
 ui_print "- Copy V2Ray config and data files"
@@ -76,29 +77,29 @@ unzip -j -o "${ZIPFILE}" 'v2ray/etc/dnscrypt-proxy/example-dnscrypt-proxy.toml' 
 unzip -j -o "${ZIPFILE}" 'v2ray/etc/dnscrypt-proxy/update-rules.sh' -d /data/v2ray/dnscrypt-proxy >&2
 [ -f /data/v2ray/config.json ] || \
 cp /data/v2ray/config.json.template /data/v2ray/config.json
-ln -s /data/v2ray/resolv.conf $MODPATH/system/etc/resolv.conf
+ln -s /data/v2ray/resolv.conf ${modpath}/system/etc/resolv.conf
 # generate module.prop
 ui_print "- Generate module.prop"
-rm -rf $MODPATH/module.prop
-touch $MODPATH/module.prop
-echo "id=v2ray" > $MODPATH/module.prop
-echo "name=V2ray for Android" >> $MODPATH/module.prop
-echo -n "version=" >> $MODPATH/module.prop
-echo ${latest_v2ray_version} >> $MODPATH/module.prop
-echo "versionCode=20200815" >> $MODPATH/module.prop
-echo "author=chendefine" >> $MODPATH/module.prop
-echo "description=V2ray core with service scripts for Android" >> $MODPATH/module.prop
+rm -rf ${modpath}/module.prop
+touch ${modpath}/module.prop
+echo "id=v2ray" > ${modpath}/module.prop
+echo "name=V2ray for Android" >> ${modpath}/module.prop
+echo -n "version=" >> ${modpath}/module.prop
+echo ${latest_v2ray_version} >> ${modpath}/module.prop
+echo "versionCode=20200815" >> ${modpath}/module.prop
+echo "author=chendefine" >> ${modpath}/module.prop
+echo "description=V2ray core with service scripts for Android" >> ${modpath}/module.prop
 
 inet_uid="3003"
-set_perm_recursive $MODPATH 0 0 0755 0644
-set_perm  $MODPATH/service.sh    0  0  0755
-set_perm  $MODPATH/uninstall.sh    0  0  0755
-set_perm  $MODPATH/scripts/start.sh    0  0  0755
-set_perm  $MODPATH/scripts/v2ray.inotify    0  0  0755
-set_perm  $MODPATH/scripts/v2ray.service    0  0  0755
-set_perm  $MODPATH/scripts/v2ray.tproxy     0  0  0755
-set_perm  $MODPATH/scripts/dnscrypt-proxy.service   0  0  0755
-set_perm  $MODPATH/system/bin/dnscrypt-proxy        0  0  0755
-set_perm  $MODPATH/system/bin/v2ray  ${inet_uid}  ${inet_uid}  0755
-set_perm  $MODPATH/system/bin/v2ctl  ${inet_uid}  ${inet_uid}  0755
+set_perm_recursive ${modpath} 0 0 0755 0644
+set_perm  ${modpath}/service.sh    0  0  0755
+set_perm  ${modpath}/uninstall.sh    0  0  0755
+set_perm  ${modpath}/scripts/start.sh    0  0  0755
+set_perm  ${modpath}/scripts/v2ray.inotify    0  0  0755
+set_perm  ${modpath}/scripts/v2ray.service    0  0  0755
+set_perm  ${modpath}/scripts/v2ray.tproxy     0  0  0755
+set_perm  ${modpath}/scripts/dnscrypt-proxy.service   0  0  0755
+set_perm  ${modpath}/system/bin/dnscrypt-proxy        0  0  0755
+set_perm  ${modpath}/system/bin/v2ray  ${inet_uid}  ${inet_uid}  0755
+set_perm  ${modpath}/system/bin/v2ctl  ${inet_uid}  ${inet_uid}  0755
 set_perm  /data/v2ray                ${inet_uid}  ${inet_uid}  0755
