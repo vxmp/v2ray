@@ -51,7 +51,7 @@ unzip -j -o "${ZIPFILE}" 'v2ray/scripts/*' -d $MODPATH/scripts >&2
 unzip -j -o "${ZIPFILE}" "v2ray/bin/$ARCH/dnscrypt-proxy" -d $MODPATH/system/bin >&2
 unzip -j -o "${ZIPFILE}" 'service.sh' -d $MODPATH >&2
 unzip -j -o "${ZIPFILE}" 'uninstall.sh' -d $MODPATH >&2
-rm "${download_v2ray_zip}"
+# rm "${download_v2ray_zip}"
 # copy v2ray data and config
 ui_print "- Copy V2Ray config and data files"
 [ -f /data/v2ray/softap.list ] || \
