@@ -16,7 +16,7 @@ mkdir -p ${modpath}/system/etc
 # download latest v2ray core from official link
 ui_print "- Connect official V2Ray download link."
 official_v2ray_link="https://github.com/v2fly/v2ray-core/releases"
-latest_v2ray_version="v4.30.0"
+latest_v2ray_version="v4.31.0"
 if [ "${latest_v2ray_version}" = "" ] ; then
   ui_print "Error: Connect official V2Ray download link failed." 
   exit 1
@@ -102,4 +102,4 @@ set_perm  ${modpath}/scripts/dnscrypt-proxy.service   0  0  0755
 set_perm  ${modpath}/system/bin/dnscrypt-proxy        0  0  0755
 set_perm  ${modpath}/system/bin/v2ray  ${inet_uid}  ${inet_uid}  0755
 set_perm  ${modpath}/system/bin/v2ctl  ${inet_uid}  ${inet_uid}  0755
-set_perm  /data/v2ray                ${inet_uid}  ${inet_uid}  0755
+set_perm  /data/v2ray                  ${inet_uid}  ${inet_uid}  0755
