@@ -3,8 +3,8 @@
 # V2ray Customization
 #####################
 SKIPUNZIP=1
-
-modpath="/sbin/.magisk/img/v2ray" # prepare v2ray execute environment
+# prepare v2ray execute environment
+modpath="/sbin/.magisk/img/v2ray"
 ui_print "- Prepare V2Ray execute environment."
 mkdir -p /data/v2ray
 mkdir -p /data/v2ray/dnscrypt-proxy
