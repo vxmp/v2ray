@@ -4,9 +4,8 @@
 #####################
 SKIPUNZIP=1
 
-# prepare v2ray execute environment
+modpath="/sbin/.magisk/img/v2ray" # prepare v2ray execute environment
 ui_print "- Prepare V2Ray execute environment."
-modpath="/sbin/.magisk/img/v2ray"
 mkdir -p /data/v2ray
 mkdir -p /data/v2ray/dnscrypt-proxy
 mkdir -p /data/v2ray/run
@@ -91,6 +90,7 @@ echo "author=chendefine" >> ${modpath}/module.prop
 echo "description=V2ray core with service scripts for Android" >> ${modpath}/module.prop
 
 inet_uid="3003"
+net_raw_uid="3004"
 set_perm_recursive ${modpath} 0 0 0755 0644
 set_perm  ${modpath}/service.sh    0  0  0755
 set_perm  ${modpath}/uninstall.sh    0  0  0755
@@ -99,7 +99,7 @@ set_perm  ${modpath}/scripts/v2ray.inotify    0  0  0755
 set_perm  ${modpath}/scripts/v2ray.service    0  0  0755
 set_perm  ${modpath}/scripts/v2ray.tproxy     0  0  0755
 set_perm  ${modpath}/scripts/dnscrypt-proxy.service   0  0  0755
-set_perm  ${modpath}/system/bin/dnscrypt-proxy        0  0  0755
 set_perm  ${modpath}/system/bin/v2ray  ${inet_uid}  ${inet_uid}  0755
 set_perm  ${modpath}/system/bin/v2ctl  ${inet_uid}  ${inet_uid}  0755
 set_perm  /data/v2ray                  ${inet_uid}  ${inet_uid}  0755
+set_perm  ${modpath}/system/bin/dnscrypt-proxy ${net_raw_uid} ${net_raw_uid} 0755
